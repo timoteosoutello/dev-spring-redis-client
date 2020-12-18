@@ -22,7 +22,7 @@ import org.springframework.core.io.Resource;
 @Configuration
 @EnableCaching
 public class RedisConfig {
-	public static final String USER_CONTROLLER = "com.github.controller.UserController";
+	public static final String USER_CRUD_LIST = "com.github.service.UserService.userCrudList";
 
 	@ConditionalOnProperty(name = "spring.redis.enabled", havingValue = "true")
 	@Bean
@@ -37,7 +37,7 @@ public class RedisConfig {
 		final Map<String, CacheConfig> config = new HashMap<>();
 		final CacheConfig cacheExpiration = new CacheConfig(TimeUnit.MINUTES.toMillis(60),
 				TimeUnit.MINUTES.toMillis(30));
-		config.put(USER_CONTROLLER, cacheExpiration);
+		config.put(USER_CRUD_LIST, cacheExpiration);
 		return new RedissonSpringCacheManager(redissonClient, config);
 	}
 }
