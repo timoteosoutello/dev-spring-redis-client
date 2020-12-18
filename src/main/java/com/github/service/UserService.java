@@ -36,7 +36,7 @@ public class UserService {
 
 	@Cacheable(cacheNames = RedisConfig.USER_CRUD_LIST)
 	public List<User> getListFromCache() {
-		return users;
+		return null;
 	}
 
 	@CacheEvict(cacheNames = RedisConfig.USER_CRUD_LIST, key = "#id")
