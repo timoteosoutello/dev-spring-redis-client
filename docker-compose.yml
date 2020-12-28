@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:13.1
+    ports:
+      - "4040:8080"
+    networks:
+      - backend-net
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=devjava
+
+  redis:
+    image: redis:6.0.9
+    ports:
+      - "8585:8585"
+    networks:
+      - backend-net
+    restart: always
+
+  backend:
+    image: dev-spring-redis:latest
+    networks:
+      - backend-net
+    depends_on:
+      - db
+      - redis
+    ports:
+      - "8787:8787"
+    tty: true
+    stdin_open: true
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+networks:
+  backend-net:
+    driver: bridge
